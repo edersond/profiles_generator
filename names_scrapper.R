@@ -15,6 +15,7 @@ url <- "https://data.brasil.io/dataset/genero-nomes/grupos.csv.gz"
 download.file(url, destfile = "grupos.csv.gz")
 names_list <- read.csv(gzfile("grupos.csv.gz","rf"))%>%
   select(NOME = name, GENERO = classification)
+names_list$NOME <- str_to_title(names_list$NOME)
 
 #cria o arquivo names.sqlite, com a tabela NAMES contendo nome e genero
 #creates the names.sqlite file
