@@ -9,6 +9,8 @@ library(DBI)
 library(rvest)
 library(stringi)
 
+setwd("./names_scraper")
+
 #baixa e le o arquivo de nomes
 ##downloads and reads the names file
 url <- "https://data.brasil.io/dataset/genero-nomes/grupos.csv.gz"
@@ -53,3 +55,5 @@ con <- dbConnect(RSQLite::SQLite(), "names.sqlite")
 dbWriteTable(con, "LAST_NAMES", last_names)
 dbDisconnect(con)
 rm(con)
+
+setwd("..")

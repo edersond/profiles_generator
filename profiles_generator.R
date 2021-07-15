@@ -6,7 +6,7 @@ generateProfiles <- function(output_type = "csv", ammount = 1000, n_last_names =
   #function that retrieves a data frame of names and gender, whith the ammount of names passes on ammount parameter
   #function função que retorna um data frame de nomes e genero, com a quantidade de nomes passada no parametro ammount
   retrieveNames <- function(ammount) {
-    con <- dbConnect(SQLite(), "names.sqlite")
+    con <- dbConnect(SQLite(), "./names_scraper/names.sqlite")
     query_result <- dbSendQuery(con, "SELECT * FROM NAMES ORDER BY RANDOM() LIMIT ?;")
     query_result <- dbBind(query_result, list(ammount))
     query_result <- dbFetch(query_result)
@@ -15,7 +15,7 @@ generateProfiles <- function(output_type = "csv", ammount = 1000, n_last_names =
     ammount_of_retreived_names <- nrow(query_result)
     while(ammount_of_retreived_names < ammount) {
       names_left_to_retreive <- ammount - ammount_of_retreived_names
-      con <- dbConnect(SQLite(), "names.sqlite")
+      con <- dbConnect(SQLite(), "./names_scraper/names.sqlite")
       n_query_result <- dbSendQuery(con, "SELECT * FROM NAMES ORDER BY RANDOM() LIMIT ?;")
       n_query_result <- dbBind(n_query_result, list(names_left_to_retreive))
       n_query_result <- dbFetch(n_query_result)
@@ -33,7 +33,7 @@ generateProfiles <- function(output_type = "csv", ammount = 1000, n_last_names =
     
     for (last_name_number in 1:n_last_names) {
       
-      con <- dbConnect(SQLite(), "names.sqlite")
+      con <- dbConnect(SQLite(), "./names_scraper/names.sqlite")
       query_result <- dbSendQuery(con, "SELECT * FROM LAST_NAMES ORDER BY RANDOM() LIMIT ?")
       query_result <- dbBind(query_result, list(ammount))
       query_result <- dbFetch(query_result)
@@ -44,7 +44,7 @@ generateProfiles <- function(output_type = "csv", ammount = 1000, n_last_names =
       while(ammount_of_retreived_last_names < ammount) {
         n_last_names_yet_to_retrieve <- ammount - ammount_of_retreived_last_names
         
-        con <- dbConnect(SQLite(), "names.sqlite")
+        con <- dbConnect(SQLite(), "./names_scraper/names.sqlite")
         n_query_result <- dbSendQuery(con, "SELECT * FROM LAST_NAMES ORDER BY RANDOM() LIMIT ?")
         n_query_result <- dbBind(n_query_result, list(n_last_names_yet_to_retrieve))
         n_query_result <- dbFetch(n_query_result)
